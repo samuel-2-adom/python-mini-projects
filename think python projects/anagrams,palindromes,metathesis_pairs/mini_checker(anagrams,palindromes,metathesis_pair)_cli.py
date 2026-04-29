@@ -161,7 +161,7 @@ def loading_animation(duration=0):
     ) as progress:
         task = progress.add_task("load", total=None)
         time.sleep(duration)
-loading_animation(duration=2)
+loading_animation(duration=1)
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 while True:
