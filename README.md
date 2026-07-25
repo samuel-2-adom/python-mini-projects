@@ -15,6 +15,9 @@ A collection of Python CLI tools and small projects built while learning program
 - Working with external files and data
 - Error handling and validation
 - Terminal UI design with Rich library
+- Task management and data persistence
+- File hashing and duplicate detection
+- Text analysis and n-gram generation
 
 ---
 
@@ -68,6 +71,31 @@ python mini_calculator_cli.py
 
 ---
 
+### ⚡ Task Manager
+A powerful task management CLI tool with priority levels, due dates, and action logging.
+
+**Features:**
+- ✅ Add tasks with title, priority, and due date
+- ✅ Delete tasks by index
+- ✅ Mark tasks as complete
+- ✅ List all tasks
+- ✅ Filter tasks (completed, uncompleted, priority)
+- ✅ Load and view individual tasks
+- ✅ Action logging with timestamps
+- ✅ Priority filtering (High/Low)
+- ✅ Due date validation (must be future date)
+- ✅ Beautiful Rich terminal UI with panels
+
+**Usage:**
+```bash
+cd taskmanager.py
+python taskmanager_cli.py
+```
+
+**Learning:** Object-oriented programming, data management, datetime handling, file logging
+
+---
+
 ### 🔐 Caesar Cipher
 A text encryption/decryption tool using shift-based cipher logic for learning cryptography basics.
 
@@ -112,7 +140,7 @@ Search and count regex patterns in text files with a built-in sample file.
 
 **Usage:**
 ```bash
-cd "think python projects/pattern_search(regex)"
+cd "think python projects/pattern_search,count(regex)"
 python "mini_checker(regex_pattern_search & counter)_cli.py"
 ```
 
@@ -144,7 +172,7 @@ Word-based algorithms for linguistic analysis and pattern recognition.
 
 **Usage:**
 ```bash
-cd "think python projects/Anagrams,Palindromes,Metathesis_Pair"
+cd "think python projects/anagrams,palindromes,metathesis_pairs"
 python "mini_checker(anagrams,palindromes,metathesis_pair)_cli.py"
 ```
 
@@ -154,32 +182,94 @@ python "mini_checker(anagrams,palindromes,metathesis_pair)_cli.py"
 
 ---
 
+### 🔎 Find Duplicates
+Detect duplicate files in a directory using MD5 hashing and content verification.
+
+**Features:**
+- ✅ Find duplicate files by MD5 hash
+- ✅ Verify duplicates by actual content comparison
+- ✅ Filter by file extension(s)
+- ✅ Recursive directory scanning
+- ✅ Support for multiple file extensions (e.g., .txt, .py, .pdf)
+- ✅ Search all files or specific types
+- ✅ Database persistence using shelve
+- ✅ Detailed duplicate file reporting
+- ✅ Beautiful Rich UI with progress indicators
+
+**Usage:**
+```bash
+cd "think python projects/find_duplicates"
+python find_duplicate.py
+```
+
+**Learning:** File hashing, MD5 algorithms, data persistence, recursive directory traversal, file operations
+
+---
+
+### 📝 Text Analysis + Generation
+Analyze text files for word frequency and generate new text using n-gram models.
+
+**Features:**
+- ✅ Analyze text frequency distribution
+- ✅ Remove punctuation and normalize text
+- ✅ Generate new text using n-gram models (unigram to n-gram)
+- ✅ Auto-download sample text files on first run
+- ✅ Extract most common words from text
+- ✅ Spell-check flagged words against dictionary
+- ✅ Identify rare, proper nouns, or misspelled words
+- ✅ Configurable n-gram size (2-50 grams)
+- ✅ Random text generation based on learned patterns
+- ✅ Support for Unicode normalization
+
+**Usage:**
+```bash
+cd "think python projects/text_analysis + generation"
+python analysis+generation.py
+```
+
+**Note:** Auto-downloads sample files (Dr. Jekyll text and crossword word list)
+
+**Learning:** Text analysis, n-gram models, language generation, Unicode handling, statistical analysis
+
+---
+
 ## 📁 Project Structure
 
 ```
 python-mini-projects/
-├── README.md                           # Project documentation
-├── LICENSE                             # MIT License
-├── requirements.txt                    # Python dependencies
-├── .gitignore                          # Git ignore rules
+├── README.md                                    # Project documentation
+├── LICENSE                                      # MIT License
+├── requirements.txt                             # Python dependencies
+├── .gitignore                                   # Git ignore rules
 │
 ├── notes.py/
-│   └── mini_notes_cli.py              # Notes management tool
+│   └── mini_notes_cli.py                       # Notes management tool
 │
 ├── calculator.py/
-│   └── mini_calculator_cli.py         # Calculator tool
+│   └── mini_calculator_cli.py                  # Calculator tool
+│
+├── taskmanager.py/
+│   └── taskmanager_cli.py                      # Task manager tool
 │
 └── think python projects/
     ├── Caesar Cipher/
-    │   └── mini_caesar_cipher_cli.py   # Caesar cipher tool
+    │   └── mini_caesar_cipher_cli.py           # Caesar cipher tool
     │
-    ├── pattern_search(regex)/
+    ├── pattern_search,count(regex)/
     │   ├── mini_checker(regex_pattern_search & counter)_cli.py
-    │   └── pg345.txt                   # (auto-downloaded on first run)
+    │   └── pg345.txt                           # (auto-downloaded on first run)
     │
-    └── Anagrams,Palindromes,Metathesis_Pair/
-        ├── mini_checker(anagrams,palindromes,metathesis_pair)_cli.py
-        └── words.txt                   # (auto-downloaded on first run)
+    ├── anagrams,palindromes,metathesis_pairs/
+    │   ├── mini_checker(anagrams,palindromes,metathesis_pair)_cli.py
+    │   └── words.txt                           # (auto-downloaded on first run)
+    │
+    ├── find_duplicates/
+    │   └── find_duplicate.py                   # Duplicate file finder tool
+    │
+    └── text_analysis + generation/
+        ├── analysis+generation.py              # Text analysis & generation tool
+        ├── dr_jekyll.txt                       # (auto-downloaded on first run)
+        └── words.txt                           # (auto-downloaded on first run)
 ```
 
 ---
@@ -193,6 +283,9 @@ python-mini-projects/
 | **`re`** | Regular expressions and pattern matching |
 | **`time`** | Timestamps and delays |
 | **`urllib`** | Downloading external files |
+| **`hashlib`** | MD5 hashing for duplicate detection |
+| **`shelve`** | Data persistence and database |
+| **`datetime`** | Date and time handling |
 | **`rich`>=13.0.0** | Beautiful terminal UI and formatting |
 
 ---
@@ -245,6 +338,12 @@ cd calculator.py
 python mini_calculator_cli.py
 ```
 
+**Task Manager:**
+```bash
+cd taskmanager.py
+python taskmanager_cli.py
+```
+
 **Caesar Cipher:**
 ```bash
 cd "think python projects/Caesar Cipher"
@@ -253,14 +352,26 @@ python mini_caesar_cipher_cli.py
 
 **Pattern Search:**
 ```bash
-cd "think python projects/pattern_search(regex)"
+cd "think python projects/pattern_search,count(regex)"
 python "mini_checker(regex_pattern_search & counter)_cli.py"
 ```
 
 **Anagrams & Palindromes:**
 ```bash
-cd "think python projects/Anagrams,Palindromes,Metathesis_Pair"
+cd "think python projects/anagrams,palindromes,metathesis_pairs"
 python "mini_checker(anagrams,palindromes,metathesis_pair)_cli.py"
+```
+
+**Find Duplicates:**
+```bash
+cd "think python projects/find_duplicates"
+python find_duplicate.py
+```
+
+**Text Analysis + Generation:**
+```bash
+cd "think python projects/text_analysis + generation"
+python analysis+generation.py
 ```
 
 ---
@@ -295,10 +406,13 @@ For detailed functionality, check the inline comments in each `.py` file.
 ✅ **Error Handling** - Comprehensive input validation and exception handling  
 ✅ **File Operations** - Reading, writing, and manipulating files safely  
 ✅ **Regex Patterns** - Practical regex usage for text processing and pattern matching  
-✅ **Algorithms** - Anagrams, palindromes, encryption, and optimization techniques  
+✅ **Algorithms** - Anagrams, palindromes, encryption, hashing, and optimization techniques  
 ✅ **Auto-Downloads** - Projects automatically fetch required data files from the internet  
 ✅ **CLI Design** - Professional command-line interface design patterns  
 ✅ **User Experience** - Loading animations, colored output, and clear prompts  
+✅ **Object-Oriented Programming** - Task and TaskManager classes demonstrating OOP principles  
+✅ **Data Persistence** - Using shelve for storing file hashes and managing state  
+✅ **N-gram Generation** - Language model implementation for text generation  
 
 ---
 
@@ -347,6 +461,7 @@ This is a learning project with exciting plans ahead:
 - **Performance Optimization** - Improve algorithm efficiency for large datasets ⚡
 - **Unit Tests** - Comprehensive test coverage 🧪
 - **Documentation** - Detailed docs for each project 📖
+- **Database Integration** - Replace shelve with SQLite for better data management 💾
 
 ---
 
@@ -360,5 +475,5 @@ If you have questions or run into issues:
 
 ---
 
-**Last Updated:** April 29, 2026
+**Last Updated:** July 25, 2026  
 **Status:** Active Learning Project ✅
