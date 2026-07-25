@@ -95,7 +95,7 @@ def same_content(path1,path2):
         return data1 == data2
 
 def find_duplicates(dir_name, extensions):
-    with shelve.open('think python projects\\find_duplicates\\digests','n') as db_file:
+    with shelve.open('digests','n') as db_file:
         walk_path(dir_name, extensions, db_file)
         for digest,paths in db_file.items():
             if len(paths) > 1:
