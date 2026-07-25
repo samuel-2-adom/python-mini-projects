@@ -236,7 +236,7 @@ Available Options 2,3,4,5,6... (default)""",
 
     # Get successor_map
     word = random.choice(list(successor_map.items()))
-    console.print(f"[underline bold green]Random successor_map of Active module:[/underline bold green] [bold blue]{word}")
+    console.print(f"[underline bold green]Random successor_map of Default module:[/underline bold green] [bold blue]{word}")
     print()
 
 
