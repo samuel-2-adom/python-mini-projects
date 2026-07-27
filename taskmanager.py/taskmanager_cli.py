@@ -1,6 +1,9 @@
 import os
+import platform
+import random
+import string
 from datetime import datetime,timedelta
-from time import time, strftime
+from time import sleep, strftime
 from rich.console import Console,Group
 from rich.panel import Panel
 from rich.align import Align
@@ -12,10 +15,16 @@ from rich.columns import Columns
 from rich.prompt import Prompt
 console = Console()
 
+# Create Task Id to track
+def task_id():
+    digits = string.digits
+    return ''.join(random.sample(digits,k=3))
+
 #Timestamp
 def time_stamp():
     return strftime("""%b-%d-%Y  %I:%M:%S %p""")
 
+#Logs actions to a file
 def actions_log(mode,action,title):
     dir = 'logs'
     path = os.path.join('logs',"log.txt")
@@ -23,7 +32,7 @@ def actions_log(mode,action,title):
     if os.path.exists(dir):
         with open(path,mode,encoding='utf-8') as log:
             if title is None:
-                log.write(f"{action} : {time_stamp()}\n")
+                log.write(f"{time_stamp()} : {action}\n")
             else:
                 log.write(f"{time_stamp()} : {action} - title({title})\n")
 
@@ -33,10 +42,12 @@ def read_file(filename):
         content = file.read().strip()
         console.print(f"[green]{content}[/green]" if content else "[underline bold red][File is empty]")
 
+# Clear screen after each action to keep the interface clean and user-friendly
 def clear_screen():
-    os.system('cls')  # Windows
-    # Use 'clear' for Linux/Mac
+    command = 'cls' if platform.system() == 'Windows' else 'clear'
+    os.system(command)
 
+# Get valid due date from user input, ensuring it's in the future and in the correct format
 def get_valid_due_date():
     while True:
         tomorrow = (datetime.now() + timedelta(days=1)).date()
@@ -59,6 +70,7 @@ def get_valid_due_date():
 
 
 
+# Rich UI design for the CLI interface
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def render_screen():
     title = "     ⚡ MY TOOL "
@@ -153,25 +165,27 @@ def loading_animation(duration=1):
         transient=True,
     ) as progress:
         task = progress.add_task("load", total=None)
-        time.sleep(duration)
-
+        sleep(duration)
+loading_animation()
 #***********************************************************************************************
 
 # Represent Tasks
 class Task:
    
    #Initiate attr and creats Task object
-   def __init__(self,title,priority,due,completed=False):
+   def __init__(self,title,priority,due,id,completed=False):
        self.title = title
        self.priority = priority
        self.due = due
+       self.id = id
        self.completed = completed
        
    # Controls the behaviour or Display Output of string object Task
    def __str__(self):
-       return f"""title : {self.title}
-priority  : {self.priority}
-due_date  : {self.due}
+       return f"""Title : {self.title}
+Priority  : {self.priority}
+Due_Date  : {self.due}
+ID        : {self.id}
 completed : {self.completed}'"""
 
 # Represents organisation of tasks
@@ -188,31 +202,43 @@ class TaskManager:
     
     # Save Tasks to Taskmanger
     def save_task(self,title,priority,due):
-        task = Task(title,priority,due)
+        task = Task(title,priority,due,id=task_id())
         return self.add_task(task)
     
-    # Remove Task from Taskmanager
-    def remove_task(self,index):
-        self.tasks.pop(index) # return object from pop
+    # Remove Task from Taskmanager using its ID
+    def remove_task(self,task_id):
+        for task in self.tasks:
+            if task.id == task_id:
+                self.tasks.remove(task)
+                return True
+        print()
+        console.print("❌ [bold red]Task ID not found[/bold red]")    
+        return False
     
     # Get Priority Task
     def priority_task(self):
         t = []
         for task in self.tasks:
-            if task.completed == False:
+            if not task.completed:
                 if task.priority == "High":
                     t.append(str(task))
         console.print(f"🔴 [underline bold green]Priority Tasks(High)[/underline bold green]\n[bold cyan]{'\n\n'.join(t)}[/bold cyan]......\n")
     
-    #  Marks Selected Task as Completed so it gets fileterd as completed
-    def complete_task(self,index):
-        self.tasks[index].completed = True
-        
+    #  Marks Selected Task as Completed using its ID so it gets fileterd as completed
+    def complete_task(self,task_id):
+        for task in self.tasks:
+            if task.id == task_id:
+                task.completed = True
+                return True
+        print()
+        console.print("❌ [bold red]Task ID not found[/bold red]")    
+        return False
+
     # Get Completed Task
     def completed_task(self):
         t = []
         for task in self.tasks:
-            if task.completed == True:
+            if task.completed:
                 t.append(str(task))
         console.print(f"✅ [underline bold green]Completed Tasks[/underline bold green]\n[bold cyan]{'\n\n'.join(t)}[bold cyan]......\n")
      
@@ -220,7 +246,7 @@ class TaskManager:
     def uncompleted_task(self):
         t = []
         for task in self.tasks:
-            if task.completed == False:
+            if not task.completed:
                 t.append(str(task))
         console.print(f"⏳ [underline bold green]Uncompleted Tasks[/underline bold green]\n[bold cyan]{'\n\n'.join(t)}[bold cyan]......\n") 
     
@@ -231,9 +257,23 @@ class TaskManager:
             t.append(str(task))
         console.print(f"📋 [underline bold green]Task List[/underline bold green]\n[bold cyan]{'\n\n'.join(t)}[bold cyan]......\n")
     
-    # Load a Task
-    def load_task(self,index):
-        console.print(f"[bold cyan]{self.tasks[index]}[/bold cyan]")
+    # Load a Task using its ID and display it in the console
+    def load_task(self,task_id):
+        for task in self.tasks:
+            if task.id == task_id:
+                console.print(f"[bold cyan]{task}[/bold cyan]")
+                return True
+        print()
+        console.print("❌ [bold red]Task ID not found[/bold red]")
+        return False
+
+    def view_task_id(self):
+        view = {}
+        for task in self.tasks:
+            view[str(task.title)] = str(task.id)
+        return view
+
+            
    
    # Controls the behaviour or Display Output of string object TaskManager
     def __str__(self):
@@ -255,6 +295,7 @@ def taskmaster():
         
         if user_input not in ["0","1","2","3","4","5","6","7","8","9"]:
             console.print("❌ [bold red]Invalid Input. Please try again.[/bold red]")
+            continue
             
         if user_input == "0":
             clear_screen()
@@ -272,22 +313,35 @@ def taskmaster():
             actions_log("a+", "Task Saved", title)
         
         elif user_input == "2":
-            try:
-                index = int(Prompt.ask("[underline bold green]Input Task Index[/underline bold green]"))
-                tm.remove_task(index)
-                console.print("[bold underline green]Task Removed Successfully[/bold underline green]✅")
-                actions_log("a+", "Task Removed", None)
-            except Exception as e:
-                console.print("❌ [bold red]Invalid Index. Please try again.[/bold red]")
+            console.print("[underline bold green]Title   :   Task ID[/underline bold green]")
+            for title, task_id in tm.view_task_id().items():
+                console.print(f"[bold blue]{title} : {task_id}")
+            print()
+            if len(tm.tasks) == 0:
+                console.print("❌ [bold red]No tasks available to remove.[/bold red]")
+            else:
+                task_id = Prompt.ask("[underline bold green]Input Task ID[/underline bold green]")
+                if tm.remove_task(task_id):
+                    console.print("[bold underline green]Task Removed Successfully[/bold underline green]✅")
+                    actions_log("a+", "Task Removed", None)
+                else:
+                    console.print("❌ [bold red]Task Removal Unsuccessful[/bold red]")
 
         elif user_input == "3":
-            try:
-                index = int(Prompt.ask("[underline bold green]Input Task Index[/underline bold green]"))
-                tm.complete_task(index)
-                console.print("[bold underline green]Task Marked as Completed[/bold underline green] ✅")
-                actions_log("a+", "Task Marked as Completed", None)
-            except Exception as e:
-                console.print("❌ [bold red]Invalid Index. Please try again.[/bold red]")
+            console.print("[underline bold green]Title   :   Task ID[/underline bold green]")
+            for title, task_id in tm.view_task_id().items():
+                console.print(f"[bold blue]{title} : {task_id}")
+            print()
+            if len(tm.tasks) == 0:
+                console.print("❌ [bold red]No tasks available to mark as completed.[/bold red]")
+            else:
+                task_id = Prompt.ask("[underline bold green]Input Task ID[/underline bold green]")
+                if tm.complete_task(task_id):
+                    console.print("[bold underline green]Task Marked as Completed[/bold underline green] ✅")
+                    actions_log("a+", "Task Marked as Completed", None)
+                else:
+                    console.print("❌ [bold red]Task Marked Unsuccessful[/bold red]")
+
         
         elif user_input == "4":
             tm.list_task()
@@ -306,12 +360,18 @@ def taskmaster():
             actions_log("a+", "Priority Tasks Displayed", None)
         
         elif user_input == "8":
-            try:
-                index = int(Prompt.ask("[underline bold green]Input Task Index[/underline bold green]"))
-                tm.load_task(index)
-                actions_log("a+", "Task Loaded", None)
-            except Exception as e:
-                console.print("❌ [bold red]Invalid Index. Please try again.[/bold red]")
+            console.print("[underline bold green]Title   :   Task ID[/underline bold green]")
+            for title, task_id in tm.view_task_id().items():
+                console.print(f"[bold blue]{title} : {task_id}")
+            print()
+            if len(tm.tasks) == 0:
+                console.print("❌ [bold red]No tasks available to load.[/bold red]")
+            else:
+                task_id = Prompt.ask("[underline bold green]Input Task ID[/underline bold green]")
+                if tm.load_task(task_id):
+                    actions_log("a+", "Task Loaded", None)
+                else:
+                    console.print("❌ [bold red]Task load unsuccessful[/bold red]")
         
         elif user_input == "9":
             read_file("logs/log.txt")
