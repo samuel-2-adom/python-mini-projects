@@ -85,6 +85,9 @@ A powerful task management CLI tool with priority levels, due dates, and action 
 - ✅ Priority filtering (High/Low)
 - ✅ Due date validation (must be future date)
 - ✅ Beautiful Rich terminal UI with panels
+- ✅ Persistent storage: tasks are saved to and loaded from a JSON file (read/write) so your tasks survive across runs
+- ✅ Human-friendly Task IDs (5-digit random IDs) for easy reference
+- ✅ View mapping of Task Title -> Task ID for selection when deleting, loading, or marking complete
 
 **Usage:**
 ```bash
@@ -92,7 +95,7 @@ cd taskmanager.py
 python taskmanager_cli.py
 ```
 
-**Learning:** Object-oriented programming, data management, datetime handling, file logging
+**Learning:** Object-oriented programming, data management, datetime handling, file logging, JSON persistence
 
 ---
 
@@ -287,6 +290,7 @@ python-mini-projects/
 | **`shelve`** | Data persistence and database |
 | **`datetime`** | Date and time handling |
 | **`rich`>=13.0.0** | Beautiful terminal UI and formatting |
+| **`json`** | Read/write JSON for Task Manager persistence |
 
 ---
 
@@ -411,8 +415,8 @@ For detailed functionality, check the inline comments in each `.py` file.
 ✅ **CLI Design** - Professional command-line interface design patterns  
 ✅ **User Experience** - Loading animations, colored output, and clear prompts  
 ✅ **Object-Oriented Programming** - Task and TaskManager classes demonstrating OOP principles  
-✅ **Data Persistence** - Using shelve for storing file hashes and managing state  
-✅ **N-gram Generation** - Language model implementation for text generation  
+✅ **Data Persistence** - Using shelve for storing file hashes and managing state; Task Manager now uses JSON file-based persistence to save and load tasks across runs
+✅ **N-gram Generation** - Language model implementation for text generation
 
 ---
 
@@ -475,5 +479,5 @@ If you have questions or run into issues:
 
 ---
 
-**Last Updated:** July 25, 2026  
+**Last Updated:** July 30, 2026  
 **Status:** Active Learning Project ✅
