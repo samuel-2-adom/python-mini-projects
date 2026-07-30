@@ -76,7 +76,7 @@ A powerful task management CLI tool with priority levels, due dates, and action 
 
 **Features:**
 - ✅ Add tasks with title, priority, and due date
-- ✅ Delete tasks by index
+- ✅ Delete, Load & Complete Tasks by using Assigned Task IDs
 - ✅ Mark tasks as complete
 - ✅ List all tasks
 - ✅ Filter tasks (completed, uncompleted, priority)
