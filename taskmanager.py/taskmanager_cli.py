@@ -2,6 +2,7 @@ import os
 import platform
 import random
 import string
+import json
 from datetime import datetime,timedelta
 from time import sleep, strftime
 from rich.console import Console,Group
@@ -18,7 +19,7 @@ console = Console()
 # Create Task Id to track
 def task_id():
     digits = string.digits
-    return ''.join(random.sample(digits,k=3))
+    return ''.join(random.choices(digits,k=5))
 
 #Timestamp
 def time_stamp():
@@ -180,12 +181,27 @@ class Task:
        self.id = id
        self.completed = completed
        
+   # Task to dict
+   def to_dict(self):
+       return {
+       "title" : self.title,
+       "priority" : self.priority,
+       "due" : self.due,
+       "id" : self.id,
+       "completed" : self.completed
+       }
+    
+    # dict to task
+   @staticmethod
+   def to_task(task_dict):
+       return Task(task_dict["title"],task_dict["priority"],task_dict["due"],task_dict["id"],task_dict["completed"])
+       
    # Controls the behaviour or Display Output of string object Task
    def __str__(self):
-       return f"""Title : {self.title}
-Priority  : {self.priority}
-Due_Date  : {self.due}
-ID        : {self.id}
+       return f"""title : {self.title}
+priority : {self.priority}
+due  : {self.due}
+id   : {self.id}
 completed : {self.completed}'"""
 
 # Represents organisation of tasks
@@ -195,7 +211,12 @@ class TaskManager:
     def __init__(self):
         # Save_State
         self.tasks = []
-     
+        
+        if os.path.exists("task.json"):
+           self.json_to_task()
+        else:
+           self.tasks = []
+           
      # Add tasks to Taskmanager
     def add_task(self,task):
         self.tasks.append(task)
@@ -203,8 +224,25 @@ class TaskManager:
     # Save Tasks to Taskmanger
     def save_task(self,title,priority,due):
         task = Task(title,priority,due,id=task_id())
-        return self.add_task(task)
+        self.add_task(task)
     
+    # Saves task as dict and dumbs to json
+    def saves_task_json(self):
+         lists = []
+         for task in self.tasks:
+             data = task.to_dict()
+             lists.append(data)
+         with open("task.json","w",encoding="utf-8") as file:
+            json.dump(lists,file,indent=4)
+      
+      # Loads dict back to task object in self.tasks
+    def json_to_task(self,filename="task.json"):
+            with open(filename,"r",encoding="utf-8") as file:
+                  task_dict = json.load(file)
+                  for task in task_dict:
+                      tasks = Task.to_task(task)
+                      self.tasks.append(tasks)
+                 
     # Remove Task from Taskmanager using its ID
     def remove_task(self,task_id):
         for task in self.tasks:
@@ -308,7 +346,8 @@ def taskmaster():
             if priority not in ["High","Low"]:
                 priority = "Low"
             due = get_valid_due_date()
-            tm.save_task(title,priority,due)
+            tm.save_task(title,priority,due) # appends to list
+            tm.saves_task_json() # saves to json
             console.print("[bold underline green]Task Saved Successfully[/bold underline green] ✅")
             actions_log("a+", "Task Saved", title)
         
@@ -322,6 +361,7 @@ def taskmaster():
             else:
                 task_id = Prompt.ask("[underline bold green]Input Task ID[/underline bold green]")
                 if tm.remove_task(task_id):
+                    tm.saves_task_json() # saves to json
                     console.print("[bold underline green]Task Removed Successfully[/bold underline green]✅")
                     actions_log("a+", "Task Removed", None)
                 else:
@@ -337,6 +377,7 @@ def taskmaster():
             else:
                 task_id = Prompt.ask("[underline bold green]Input Task ID[/underline bold green]")
                 if tm.complete_task(task_id):
+                    tm.saves_task_json()
                     console.print("[bold underline green]Task Marked as Completed[/bold underline green] ✅")
                     actions_log("a+", "Task Marked as Completed", None)
                 else:
