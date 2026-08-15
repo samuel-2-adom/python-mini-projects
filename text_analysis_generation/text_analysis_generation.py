@@ -241,8 +241,11 @@ Available Options 2,3,4,5,6... (default)""",
 
 
     # Input length of words
-    length = Prompt.ask("[underline bold green]Enter number of words (default 20)")
-    length = int(length) if length else 20
+    try:
+        length = Prompt.ask("[underline bold green]Enter number of words (default 20)")
+        length = int(length) if length else 20
+    except ValueError:
+        length = 20
 
     # Input pattern for generation
     raw_input = Prompt.ask(f"[underline bold green]Enter {module-1} words to start the text generation (leave blank for random)")
