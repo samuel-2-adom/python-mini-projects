@@ -18,12 +18,14 @@ A collection of Python CLI tools and small projects built while learning program
 - Task management and data persistence
 - File hashing and duplicate detection
 - Text analysis and n-gram generation
+- Object-oriented programming (OOP)
+- Banking systems and financial simulations
 
 ---
 
 ## 🧰 Projects Included
 
-### 📓 Notes CLI
+### 📓 Note Manager
 A command-line tool for managing notes and files with a beautiful terminal interface.
 
 **Features:**
@@ -41,8 +43,8 @@ A command-line tool for managing notes and files with a beautiful terminal inter
 
 **Usage:**
 ```bash
-cd notes.py
-python mini_notes_cli.py
+cd notemanager
+python notemanager.py
 ```
 
 **Learning:** File I/O, regex patterns, CLI design
@@ -63,8 +65,8 @@ A simple CLI-based calculator with comprehensive input validation and error hand
 
 **Usage:**
 ```bash
-cd calculator.py
-python mini_calculator_cli.py
+cd calculator
+python calculator.py
 ```
 
 **Learning:** Input validation, error handling, exception management
@@ -91,8 +93,8 @@ A powerful task management CLI tool with priority levels, due dates, and action 
 
 **Usage:**
 ```bash
-cd taskmanager.py
-python taskmanager_cli.py
+cd taskmanager
+python taskmanager.py
 ```
 
 **Learning:** Object-oriented programming, data management, datetime handling, file logging, JSON persistence
@@ -116,8 +118,8 @@ A text encryption/decryption tool using shift-based cipher logic for learning cr
 
 **Usage:**
 ```bash
-cd "think python projects/Caesar Cipher"
-python mini_caesar_cipher_cli.py
+cd caesar_cipher
+python caesar_cipher.py
 ```
 
 **Learning:** Encryption concepts, file handling, algorithm implementation
@@ -143,8 +145,8 @@ Search and count regex patterns in text files with a built-in sample file.
 
 **Usage:**
 ```bash
-cd "think python projects/pattern_search,count(regex)"
-python "mini_checker(regex_pattern_search & counter)_cli.py"
+cd "pattern_search,count(regex)"
+python "pattern_search,count(regex).py"
 ```
 
 **Note:** First run will auto-download `pg345.txt` (Gutenberg text file ~870KB)
@@ -175,8 +177,8 @@ Word-based algorithms for linguistic analysis and pattern recognition.
 
 **Usage:**
 ```bash
-cd "think python projects/anagrams,palindromes,metathesis_pairs"
-python "mini_checker(anagrams,palindromes,metathesis_pair)_cli.py"
+cd "anagrams,palindromes,metathesis_pair"
+python "anagrams,palindromes,metathesis_pair.py"
 ```
 
 **Note:** First run will auto-download `words.txt` (word list file ~1MB)
@@ -201,7 +203,7 @@ Detect duplicate files in a directory using MD5 hashing and content verification
 
 **Usage:**
 ```bash
-cd "think python projects/find_duplicates"
+cd find_duplicates
 python find_duplicate.py
 ```
 
@@ -209,7 +211,7 @@ python find_duplicate.py
 
 ---
 
-### 📝 Text Analysis + Generation
+### 📝 Text Analysis & Generation
 Analyze text files for word frequency and generate new text using n-gram models.
 
 **Features:**
@@ -226,8 +228,8 @@ Analyze text files for word frequency and generate new text using n-gram models.
 
 **Usage:**
 ```bash
-cd "think python projects/text_analysis + generation"
-python analysis+generation.py
+cd text_analysis_generation
+python text_analysis_generation.py
 ```
 
 **Note:** Auto-downloads sample files (Dr. Jekyll text and crossword word list)
@@ -236,43 +238,72 @@ python analysis+generation.py
 
 ---
 
+### 🏦 Banking Simulator
+A comprehensive banking system simulation with account management, transactions, and financial operations.
+
+**Features:**
+- ✅ Create and manage bank accounts
+- ✅ Deposit and withdraw funds
+- ✅ Transfer money between accounts
+- ✅ Check account balance
+- ✅ View transaction history
+- ✅ Interest calculations and updates
+- ✅ Account types (Savings, Checking)
+- ✅ Fee management
+- ✅ Beautiful Rich terminal UI with formatted tables
+- ✅ Persistent storage with JSON
+- ✅ User authentication and account security
+- ✅ Financial reports and summaries
+
+**Usage:**
+```bash
+cd banking_simulator
+python banking_simulator.py
+```
+
+**Learning:** Object-oriented programming, financial logic, data persistence, user authentication, banking workflows
+
+---
+
 ## 📁 Project Structure
 
 ```
 python-mini-projects/
-├── README.md                                    # Project documentation
-├── LICENSE                                      # MIT License
-├── requirements.txt                             # Python dependencies
-├── .gitignore                                   # Git ignore rules
+├── README.md                                          # Project documentation
+├── LICENSE                                            # MIT License
+├── requirements.txt                                   # Python dependencies
+├── .gitignore                                         # Git ignore rules
 │
-├── notes.py/
-│   └── mini_notes_cli.py                       # Notes management tool
+├── calculator/
+│   └── calculator.py                                  # Calculator tool
 │
-├── calculator.py/
-│   └── mini_calculator_cli.py                  # Calculator tool
+├── notemanager/
+│   └── notemanager.py                                 # Note management tool
 │
-├── taskmanager.py/
-│   └── taskmanager_cli.py                      # Task manager tool
+├── taskmanager/
+│   └── taskmanager.py                                 # Task manager tool
 │
-└── think python projects/
-    ├── Caesar Cipher/
-    │   └── mini_caesar_cipher_cli.py           # Caesar cipher tool
-    │
-    ├── pattern_search,count(regex)/
-    │   ├── mini_checker(regex_pattern_search & counter)_cli.py
-    │   └── pg345.txt                           # (auto-downloaded on first run)
-    │
-    ├── anagrams,palindromes,metathesis_pairs/
-    │   ├── mini_checker(anagrams,palindromes,metathesis_pair)_cli.py
-    │   └── words.txt                           # (auto-downloaded on first run)
-    │
-    ├── find_duplicates/
-    │   └── find_duplicate.py                   # Duplicate file finder tool
-    │
-    └── text_analysis + generation/
-        ├── analysis+generation.py              # Text analysis & generation tool
-        ├── dr_jekyll.txt                       # (auto-downloaded on first run)
-        └── words.txt                           # (auto-downloaded on first run)
+├── caesar_cipher/
+│   └── caesar_cipher.py                               # Caesar cipher tool
+│
+├── pattern_search,count(regex)/
+│   ├── pattern_search,count(regex).py                 # Pattern search tool
+│   └── pg345.txt                                      # (auto-downloaded on first run)
+│
+├── anagrams,palindromes,metathesis_pair/
+│   ├── anagrams,palindromes,metathesis_pair.py        # Word analysis tool
+│   └── words.txt                                      # (auto-downloaded on first run)
+│
+├── find_duplicates/
+│   └── find_duplicate.py                              # Duplicate file finder tool
+│
+├── text_analysis_generation/
+│   ├── text_analysis_generation.py                    # Text analysis & generation tool
+│   ├── dr_jekyll.txt                                  # (auto-downloaded on first run)
+│   └── words.txt                                      # (auto-downloaded on first run)
+│
+└── banking_simulator/
+    └── banking_simulator.py                           # Banking system simulator
 ```
 
 ---
@@ -290,7 +321,7 @@ python-mini-projects/
 | **`shelve`** | Data persistence and database |
 | **`datetime`** | Date and time handling |
 | **`rich`>=13.0.0** | Beautiful terminal UI and formatting |
-| **`json`** | Read/write JSON for Task Manager persistence |
+| **`json`** | Read/write JSON for persistence |
 
 ---
 
@@ -330,52 +361,58 @@ py -m pip install -r requirements.txt
 
 ### 3. Run Your First Project
 
-**Notes CLI:**
+**Note Manager:**
 ```bash
-cd notes.py
-python mini_notes_cli.py
+cd notemanager
+python notemanager.py
 ```
 
 **Calculator:**
 ```bash
-cd calculator.py
-python mini_calculator_cli.py
+cd calculator
+python calculator.py
 ```
 
 **Task Manager:**
 ```bash
-cd taskmanager.py
-python taskmanager_cli.py
+cd taskmanager
+python taskmanager.py
 ```
 
 **Caesar Cipher:**
 ```bash
-cd "think python projects/Caesar Cipher"
-python mini_caesar_cipher_cli.py
+cd caesar_cipher
+python caesar_cipher.py
 ```
 
 **Pattern Search:**
 ```bash
-cd "think python projects/pattern_search,count(regex)"
-python "mini_checker(regex_pattern_search & counter)_cli.py"
+cd "pattern_search,count(regex)"
+python "pattern_search,count(regex).py"
 ```
 
 **Anagrams & Palindromes:**
 ```bash
-cd "think python projects/anagrams,palindromes,metathesis_pairs"
-python "mini_checker(anagrams,palindromes,metathesis_pair)_cli.py"
+cd "anagrams,palindromes,metathesis_pair"
+python "anagrams,palindromes,metathesis_pair.py"
 ```
 
 **Find Duplicates:**
 ```bash
-cd "think python projects/find_duplicates"
+cd find_duplicates
 python find_duplicate.py
 ```
 
-**Text Analysis + Generation:**
+**Text Analysis & Generation:**
 ```bash
-cd "think python projects/text_analysis + generation"
-python analysis+generation.py
+cd text_analysis_generation
+python text_analysis_generation.py
+```
+
+**Banking Simulator:**
+```bash
+cd banking_simulator
+python banking_simulator.py
 ```
 
 ---
@@ -384,7 +421,7 @@ python analysis+generation.py
 
 Each project is a standalone CLI application with an interactive menu. Simply navigate to the project directory and run the Python file.
 
-### Notes CLI Example
+### Note Manager Example
 ```
 [OPTIONS]
 [01] 🔄 List Dir
@@ -414,9 +451,10 @@ For detailed functionality, check the inline comments in each `.py` file.
 ✅ **Auto-Downloads** - Projects automatically fetch required data files from the internet  
 ✅ **CLI Design** - Professional command-line interface design patterns  
 ✅ **User Experience** - Loading animations, colored output, and clear prompts  
-✅ **Object-Oriented Programming** - Task and TaskManager classes demonstrating OOP principles  
-✅ **Data Persistence** - Using shelve for storing file hashes and managing state; Task Manager now uses JSON file-based persistence to save and load tasks across runs
-✅ **N-gram Generation** - Language model implementation for text generation
+✅ **Object-Oriented Programming** - Task, TaskManager, and Account classes demonstrating OOP principles  
+✅ **Data Persistence** - Using shelve for storing file hashes, JSON for managing state across runs  
+✅ **N-gram Generation** - Language model implementation for text generation  
+✅ **Banking Systems** - Financial simulations with account management and transaction processing
 
 ---
 
@@ -479,5 +517,5 @@ If you have questions or run into issues:
 
 ---
 
-**Last Updated:** July 30, 2026  
+**Last Updated:** August 15, 2026  
 **Status:** Active Learning Project ✅
