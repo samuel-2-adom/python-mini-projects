@@ -6,3 +6,6 @@ digests
 __pycache__
 logs
 task.json
+note.json
+bank.json
+customer_info.json
