@@ -105,7 +105,7 @@ def render_screen():
     Rule(style="bold"),  # 👈 now goes edge-to-edge
     
     " [magenta][7][/magenta] 📜 [bold magenta]Check AccountTransaction History(Acc Num)[/bold magenta]",
-    " [yellow][8][/yellow] 💳  [bold yellow]Check Account Balance(Acc Num)[/bold yellow]",
+    " [yellow][8][/yellow] 💳 [bold yellow]Check Account Balance(Acc Num)[/bold yellow]",
 )
     
     console.print(
@@ -175,7 +175,7 @@ address : {self.address}"""
 
 #Account for trasactions **************
 class Account:
-    def __init__(self,acc_number=None,holder_info=None,balance=0,status=None,acc_type=None,history=None,interest=0,last_interest=None):
+    def __init__(self,acc_number=None,holder_info=None,balance=0,status=None,acc_type=None,history=None,interest=0,last_interest=time.time()):
         self.acc_number = acc_number
         self.holder_info = holder_info
         self.balance = round(balance,2)
@@ -183,7 +183,7 @@ class Account:
         self.acc_type = acc_type
         self.history = history if history is not None else []
         self.interest = round(interest)
-        self.last_interest = time.time()
+        self.last_interest = last_interest
         
         self.withdrawal_limit = 3
         self.overdraft_limit = 500
@@ -266,7 +266,10 @@ Status    :    {self.status}"""
     def transfer(self,account,amount):
          amount = amount if amount >= 0 else -amount
          if self.status == "Closed":
-            console.print(f"❌ [bold red][{self.acc_type} is Closed....Transaction Failed!!!]")
+            console.print(f"❌ [bold red]Tranfer Account : [{self.acc_type} is Closed....Transaction Failed!!!]")
+
+         elif account.status == "Closed":
+             console.print(f"❌ [bold red]Recieving Account : [{self.acc_type} is Closed....Transaction Failed!!!]")
             
          elif self.status == "Active":
              if amount+self.fee(amount) <= self.balance:
@@ -413,6 +416,7 @@ class Bank:
                     #There are three Classes
                     if dictionary["acc_type"] == "Account":
                         data = Account.to_acc(dictionary)
+                        self.accounts.append(data)
                     elif dictionary["acc_type"] == "SavingsAccount":
                         data = SavingsAccount.to_acc(dictionary)
                         self.accounts.append(data)
@@ -517,7 +521,7 @@ class Bank:
                 elapsed = time.time() - acc.last_interest
                 periods = int(elapsed // 10)
                 if periods > 0:
-                    interest = acc.balance * 0.002 * periods
+                    interest = acc.balance * 0.00002 * periods
                     acc.balance += round(interest,3)
                     acc.interest += interest
                     acc.last_interest += periods * 10
@@ -602,28 +606,13 @@ Account Balance    :    {acc.balance:.2f}[/bold blue]""")
             acc_num = Prompt.ask("[underline bold green]Withdrawal Account(acc num)")
             acc = self.find_account("helper",acc_num)
             if acc:
-                if isinstance(acc,Account):
-                    try:
-                        print()
-                        amount  = float(Prompt.ask("[underline bold green]Withdrawal Amount"))
-                        acc.withdraw(amount)
-                    except ValueError:
-                        console.print("❌ [bold red][Invalid Amount....]")
-                elif isinstance(acc,SavingsAccount):
-                    self.update_interest()
-                    try:
-                        print()
-                        amount  = float(Prompt.ask("[underline bold green]Withdrawal Amount"))
-                        acc.withdraw(amount)
-                    except ValueError:
-                        console.print("❌ [bold red][Invalid Amount....]")
-                elif isinstance(acc,CurrentAccount):
-                    try:
-                        print()
-                        amount  = float(Prompt.ask("[underline bold green]Withdrawal Amount"))
-                        acc.withdraw(amount)
-                    except ValueError:
-                        console.print("❌ [bold red][Invalid Amount....]")
+                self.update_interest()
+                try:
+                    print()
+                    amount  = float(Prompt.ask("[underline bold green]Withdrawal Amount"))
+                    acc.withdraw(amount)
+                except ValueError:
+                    console.print("❌ [bold red][Invalid Amount....]")
 
     # List Accounts
     def list_acc(self):
