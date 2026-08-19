@@ -638,6 +638,7 @@ Account Balance    :    {acc.balance:.2f}[/bold blue]""")
 def simulation():
     b = Bank()
     b.load_from_json()
+    b.update_interest()
     
     while True:
         clear_screen()
