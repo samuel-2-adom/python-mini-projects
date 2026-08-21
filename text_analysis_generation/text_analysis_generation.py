@@ -78,7 +78,7 @@ def split_text(line):
     return line.replace('—', ' ').split()
 
 # Cleans the text by removing punctuations and lower them
-def clean_text(text):
+def clean_text(text,punctuation):
     """Cleans the text by removing leading/trailing whitespace and normalizing Unicode."""
     return text.strip(punctuation).lower()
 
@@ -152,7 +152,7 @@ def text_gen_anl():
         with open_text(read_input) as file:
             for line in file:
                 for text in split_text(line):
-                    text = clean_text(text)
+                    text = clean_text(text,punctuation)
                     word_counter[text] = word_counter.get(text, 0) + 1
         most_common(word_counter)
         console.print(f"[bold green]File Analyzed(lowered & cleaned):[/bold green] [blue]{read_input}")
@@ -232,7 +232,7 @@ def text_gen_anl():
         with open_text(read_input) as file:
             for line in file:
                 for text in split_text(line):
-                    text = clean_text(text)
+                    text = clean_text(text,punctuation)
                     process_n_gram(text, module)
 
         # Get successor_map
