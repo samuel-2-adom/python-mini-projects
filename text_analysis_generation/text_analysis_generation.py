@@ -26,7 +26,7 @@ def loading_animation(duration=1):
     ) as progress:
         task = progress.add_task("load", total=None)
         time.sleep(duration)
-loading_animation()
+
 
 def render_screen():
     title = "     ⚡ MY TOOL "
@@ -114,6 +114,7 @@ def generate_text(input_text,length):
 
 #*********************************************************************************************
 def text_gen_anl():
+    loading_animation()
     while True:
         render_screen()
 

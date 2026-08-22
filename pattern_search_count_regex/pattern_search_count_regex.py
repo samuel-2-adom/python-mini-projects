@@ -15,15 +15,16 @@ from rich.columns import Columns
 from rich.prompt import Prompt
 console = Console()
 
-url = "https://www.gutenberg.org/cache/epub/345/pg345.txt"
-file = "pg345.txt"
+def download_f():
+    url = "https://www.gutenberg.org/cache/epub/345/pg345.txt"
+    file = "pg345.txt"
 
-#Checks if file exists
-if not os.path.exists(file):
-    console.print(f"⏳ [bold green]Downloading[/bold green] [bold cyan]'{file}'...")
-    urllib.request.urlretrieve(url,file)
-    console.print(f"✅ [bold cyan]'{file}'[/bold cyan] [bold green]download complete[/bold green]")
-    print()
+    #Checks if file exists
+    if not os.path.exists(file):
+        console.print(f"⏳ [bold green]Downloading[/bold green] [bold cyan]'{file}'...")
+        urllib.request.urlretrieve(url,file)
+        console.print(f"✅ [bold cyan]'{file}'[/bold cyan] [bold green]download complete[/bold green]")
+        print()
 
 # Clear screen after each action to keep the interface clean and user-friendly
 def clear_screen():
@@ -140,6 +141,7 @@ def loading_animation(duration=0):
 
 def main():
     loading_animation(duration=1)
+    download_f()
     while True:
         clear_screen()
         render_screen()

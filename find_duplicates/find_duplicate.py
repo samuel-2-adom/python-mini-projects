@@ -24,7 +24,7 @@ def loading_animation(duration=1):
     ) as progress:
         task = progress.add_task("load", total=None)
         time.sleep(duration)
-loading_animation()
+
 
 def render_screen():
     title = "    ⚡ MY TOOL "
@@ -88,11 +88,19 @@ def walk_path(dir_name, extensions, db_file):
             console.print('[bold yellow]Unknown file type: %s' % path)
             print()
 
-def same_content(path1,path2):
-    with open(path1,'rb') as file1, open(path2,'rb') as file2:
-        data1 = file1.read()
-        data2 = file2.read()
-        return data1 == data2
+def same_content(*paths):
+    if len(paths) < 2:
+        raise ValueError("Provide at least two files")
+
+    with open(paths[0], "rb") as first_file:
+        first_data = first_file.read()
+
+    for path in paths[1:]:
+        with open(path, "rb") as file:
+            if file.read() != first_data:
+                return False
+
+    return True
 
 def find_duplicates(dir_name, extensions):
     with shelve.open('digests','n') as db_file:
@@ -107,34 +115,38 @@ def find_duplicates(dir_name, extensions):
                 console.print('[bold red]Non-duplicate files with the same hash: %s' % paths)
                 print()
 
-
-while True:
-    render_screen()
-
-    # Validate directory input
+def main():
+    loading_animation()
     while True:
-        dir_name = Prompt.ask("[underline bold green]Enter the directory to search for duplicates")
-        if os.path.exists(dir_name):
-            console.print("[bold green]Directory exists. Proceeding with duplicate search...")
-            time.sleep(1)  # Simulate processing time  
-            print()
+        render_screen()
+
+        # Validate directory input
+        while True:
+            dir_name = Prompt.ask("[underline bold green]Enter the directory to search for duplicates")
+            if os.path.exists(dir_name):
+                console.print("[bold green]Directory exists. Proceeding with duplicate search...")
+                time.sleep(1)  # Simulate processing time  
+                print()
+                break
+            else:
+                console.print('[bold red]Directory does not exist.')
+                print()
+        
+        # Ask for extensions and search
+        extension_input = Prompt.ask(
+            "[underline bold green]Enter file extension(s) to look for (e.g. .txt or .txt,.py). Leave blank to search all files"
+        )
+        extensions = [part.strip() for part in extension_input.replace(',', ' ').split() if part.strip()]
+        extensions = [part if part.startswith('.') else f'.{part}' for part in extensions]
+        print()
+        find_duplicates(dir_name, extensions)
+        
+        # Ask if user wants to search again
+        again = Prompt.ask("[underline bold green]Search again?", choices=["y", "n"], default="n")
+        print()
+        if again.lower() != "y":
+            console.print("[bold green]Goodbye!")
             break
-        else:
-            console.print('[bold red]Directory does not exist.')
-            print()
-    
-    # Ask for extensions and search
-    extension_input = Prompt.ask(
-        "[underline bold green]Enter file extension(s) to look for (e.g. .txt or .txt,.py). Leave blank to search all files"
-    )
-    extensions = [part.strip() for part in extension_input.replace(',', ' ').split() if part.strip()]
-    extensions = [part if part.startswith('.') else f'.{part}' for part in extensions]
-    print()
-    find_duplicates(dir_name, extensions)
-    
-    # Ask if user wants to search again
-    again = Prompt.ask("[underline bold green]Search again?", choices=["y", "n"], default="n")
-    print()
-    if again.lower() != "y":
-        console.print("[bold green]Goodbye!")
-        break
+
+if __name__ == "__main__":
+    main()

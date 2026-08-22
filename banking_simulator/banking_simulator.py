@@ -41,7 +41,7 @@ def loading_animation(duration=1):
     ) as progress:
         task = progress.add_task("load", total=None)
         sleep(duration)
-loading_animation()
+
 
 # Rich UI design for the CLI interface
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -296,7 +296,8 @@ Status    :    {self.status}"""
         if len(r) > 0:
             print()
             console.print("📜[underline bold yellow]Transaction History")
-            console.print(f"[bold blue]{"\n\n".join(r)}")
+            text = "\n\n".join(r)
+            console.print(f"[bold blue]{text}")
         if len(r) < 1:
             print()
             console.print("❌ [bold red][No Transaction History Available....]")
@@ -636,6 +637,7 @@ Account Balance    :    {acc.balance:.2f}[/bold blue]""")
             
             
 def simulation():
+    loading_animation()
     b = Bank()
     b.load_from_json()
     b.update_interest()

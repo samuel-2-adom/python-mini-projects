@@ -185,7 +185,7 @@ def loading_animation(duration=1):
     ) as progress:
         task = progress.add_task("load", total=None)
         sleep(duration)
-loading_animation()
+
 #***********************************************************************************************
 
 
@@ -513,6 +513,7 @@ class SaveNote:
             
 
 def notes():
+    loading_animation()
     nm = NoteManager()
     sn = SaveNote(nm)
     sn.load_from_json()
@@ -554,7 +555,8 @@ def notes():
                     console.print("🔴 [bold red]Invalid ID")
             
         elif user_input == "3":
-            console.print(f"[bold green]{nm.filter("list")}")
+            filter = nm.filter("list")
+            console.print(f"[bold green]{filter}")
             
         elif user_input == "4":
             nm.sort()
@@ -599,7 +601,8 @@ def notes():
                 id = Prompt.ask("[underline bold green]Input Note ID")
                 if nm.filter("load",id):
                     print()
-                    console.print(f"[bold green]{nm.filter("load",id)}")
+                    filter = nm.filter("load",id)
+                    console.print(f"[bold green]{filter}")
                 else:
                    console.print("🔴 [bold red]Invalid ID")
         
@@ -608,28 +611,32 @@ def notes():
             if count < 1:
                 console.print("🔴 [bold red]No Favorite Notes Available")
             elif count > 0:
-                console.print(f"[bold green]{nm.filter("favorite")}")
+                filter = nm.filter("favorite")
+                console.print(f"[bold green]{filter}")
         
         elif user_input == "11":
             count = char_count(nm.filter("pinned"))
             if count < 1:
                 console.print("🔴 [bold red]No Pinned Notes Available")
             elif count > 0:
-                console.print(f"[bold green]{nm.filter("pinned")}")
+                filter = nm.filter("pinned")
+                console.print(f"[bold green]{filter}")
         
         elif user_input == "12":
                 if nm.display():
                     print()
                     title = Prompt.ask("[underline bold green]Input Title")
                     print()
-                    console.print(f"[bold green]{nm.filter("search_title",None,title)}")
+                    filter = nm.filter("search_title",None,title)
+                    console.print(f"[bold green]{filter}")
         
         elif user_input == "13":
             if nm.display():
                 print()
                 tag = Prompt.ask("[underline bold green]Input Tag")
                 print()
-                console.print(f"[bold green]{nm.filter("search_tag",None,None,tag)}")
+                filter = nm.filter("search_tag",None,None,tag)
+                console.print(f"[bold green]{filter}")
                 
         print()
         Prompt.ask("[underline bold green]Press Enter to continue")

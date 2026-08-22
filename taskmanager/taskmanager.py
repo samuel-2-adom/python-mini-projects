@@ -167,7 +167,7 @@ def loading_animation(duration=1):
     ) as progress:
         task = progress.add_task("load", total=None)
         sleep(duration)
-loading_animation()
+
 #***********************************************************************************************
 
 # Represent Tasks
@@ -322,6 +322,7 @@ class TaskManager:
      
 
 def taskmaster():
+    loading_animation()
     tm = TaskManager()
 
     while True:
