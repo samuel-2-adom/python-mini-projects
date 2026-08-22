@@ -9,3 +9,5 @@ task.json
 note.json
 bank.json
 customer_info.json
+test_analy_gen.py
+test_pairs.py
