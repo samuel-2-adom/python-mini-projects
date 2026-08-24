@@ -11,8 +11,7 @@ import unittest
 import os
 from unittest import TestCase
 
-class TestExample(TestCase):
-
+class TestAnalysisGen(TestCase):
     # Text_Analysis_Generation
     def test_is_specialline(self):
         result = is_special_line("*** He took that beating like a chanp")
@@ -35,6 +34,7 @@ class TestExample(TestCase):
         result = clean_text("!!!Hypothetically Just What A Bigger Idiot He Is???",p)
         self.assertEqual(result,"hypothetically just what a bigger idiot he is")
 
+class TestPairs(TestCase):
     # Anagarams Palindromes Meta_Pairs
     def test_is_anagram(self):
         result = is_anagram("mate","tame")
@@ -52,7 +52,8 @@ class TestExample(TestCase):
         result = is_meta_pair("carve","crave")
         self.assertTrue(result)
 
-    # Caesar  Cypher
+class TestCipher(TestCase):
+    # Caesar  Cipher
     def test_encode(self):
         result = encode("give to caesar what is caesar's",5)
         self.assertEqual(result,"lnaj yt hfjxfw bmfy nx hfjxfw'x")
@@ -61,6 +62,7 @@ class TestExample(TestCase):
         result = decode("lnaj yt hfjxfw bmfy nx hfjxfw'x",5)
         self.assertEqual(result,"give to caesar what is caesar's")
 
+class TestCalc(TestCase):
     # Caluculator
     def test_add(self):
         result = add(2,5)
@@ -82,6 +84,7 @@ class TestExample(TestCase):
         result = div(10,5)
         self.assertEqual(result,2)
 
+class TestDuplicate(TestCase):
     # Find_Duplicates
     def test_ispath(self):
         f = "logs4q1.txt"
@@ -117,6 +120,7 @@ class TestExample(TestCase):
         os.remove(f)
         os.remove(f1)
 
+class TestPatternSearch(TestCase):
     # Pattern_Search_Count_Regex
     def test_findfirst(self):
         f = "logs4q1.txt"
@@ -133,9 +137,11 @@ class TestExample(TestCase):
         result = count_first("goat",f)
         self.assertEqual(result, 1)
         os.remove(f)
-    
+
+class TestBankSim(TestCase):
     # Banking Simulation
-    #class Customer
+    
+    # class Customer
     def test_acc_num(self):
         result = account_number()
         self.assertTrue(result.startswith("1000") and len(result) == 8)
@@ -153,28 +159,59 @@ class TestExample(TestCase):
         self.assertEqual(customer.address,"gracious4165@***")
     
     # class Account
-    def test_account(self):
+    def test_account_number(self):
         acc_num = account_number()
-        customer = Customer("Gracious","0333****","gracious4165@***")
-        ac_type = ["Account","CurrentAccount","SavingsAccount"]
-        account = Account(acc_num,customer,0,"Active",ac_type[0],None,0,None)
-        result = account.acc_number[:4] == str(1000) and len(account.acc_number) == 8 and account.balance == 0 and account.acc_type == "Account" and account.interest == 0
+        account = Account(acc_num,None,0,"Active","Account",None,0,None)
+        result = account.acc_number.startswith("1000") and len(account.acc_number) == 8
         self.assertTrue(result)
     
+    def test_account_type(self):
+        account = Account(None,None,0,"Active","CurrentAccount",None,0,None)
+        result = account.acc_type == "CurrentAccount"
+        self.assertTrue(result)
+    
+    def test_account_balance_interest(self):
+        account = Account(None,None,104,"Active","Account",None,10,None)
+        result = account.balance == 104 and account.interest == 10
+        self.assertTrue(result)
+    
+    def test_account_holder_name(self):
+        customer = Customer("Klien","0123xxxxxx","@klienXXX")
+        account = Account(None,customer,0,"Active","Account",None,0,None)
+        self.assertEqual(account.holder_info.name,"Klien")
+    
+    def test_account_holder_phone(self):
+        customer = Customer("Klien","0123xxxxxx","@klienXXX")
+        account = Account(None,customer,0,"Active","Account",None,0,None)
+        self.assertEqual(account.holder_info.phone,"0123xxxxxx")
+    
+    def test_account_holder_address(self):
+        customer = Customer("Klien","0123xxxxxx","@klienXXX")
+        account = Account(None,customer,0,"Active","Account",None,0,None)
+        self.assertEqual(account.holder_info.address,"@klienXXX")
+        
     def test_fee(self):
         account = Account(None,None,0,"Active","Account")
         result = account.fee(101)
         self.assertEqual(result,1.01)
     
-    def test_handlenegative_amount(self):
+    def test_deposit_negative_amount(self):
         account1 = Account(None,None,0,"Active","Account")
-        account2 = Account(None,None,0,"Active","Account")
         account1.deposit(-100)
-        account1.withdraw(-50)
-        account1.transfer(account2,-25)
         print()
-        result = account1.balance == 24.5 and account2.balance == 25
+        result = account1.balance == 100
         self.assertTrue(result)
+    
+    def test_deposit_zero_amount(self):
+        account = Account(None,None,0,"Active","Account")
+        account.deposit(0)
+        print()
+        self.assertTrue(account.balance==0)
+    
+    def test_deposit_closed_account(self):
+        account1 = SavingsAccount(None,None,0,"Closed","Account")
+        account1.deposit(50)
+        self.assertEqual(account1.balance,0)
         
     def test_deposit(self):
         account = Account(None,None,0,"Active","Account")
@@ -182,34 +219,57 @@ class TestExample(TestCase):
         print()
         self.assertEqual(account.balance,159.9)
     
-    def test_withdrawal_and_charges(self):
-        account = Account(None,None,0,"Active","Account")
-        account.deposit(159.9)
+    def test_withdrawal_closed_account(self):
+        account = Account(None,None,100,"Closed","Account",None,0,None)
+        account.withdraw(59)
+        self.assertEqual(account.balance,100)
+    
+    def test_withdrawal_negative_amount(self):
+        account = Account(None,None,100,"Active","Account",None,0,None)
+        account.withdraw(-59)
+        self.assertEqual(account.balance,40.41)
+    
+    def test_withdrawal_andcharges(self):
+        account = Account(None,None,159.9,"Active","Account")
         account.withdraw(100)
         print()
         self.assertEqual(round(account.balance,1),58.9)
     
-    def test_transfer_receiving_end(self):
-        account1 = Account(None,None,0,"Active","Account")
-        account2 = Account(None,None,0,"Active","Account")
-        account1.deposit(100)
-        account2.deposit(20)
+    def test_transfer_receiving(self):
+        account1 = Account(None,None,100,"Active","Account")
+        account2 = Account(None,None,20,"Active","Account")
         account1.transfer(account2,40)
         print()
         self.assertEqual(account2.balance,60)
     
-    def test_transfer_and_sending_endcharges(self):
-        account1 = Account(None,None,0,"Active","Account")
-        account2 = Account(None,None,0,"Active","Account")
-        account1.deposit(100)
-        account2.deposit(20)
+    def test_transfer_sending_andcharges(self):
+        account1 = Account(None,None,100,"Active","Account")
+        account2 = Account(None,None,20,"Active","Account")
         account1.transfer(account2,60)
         print()
         self.assertEqual(account1.balance,39.4)
     
+    def test_transfer_closed_account_one_end(self):
+        account1 = Account(None,None,100,"Active","Account")
+        account2 = Account(None,None,20,"Closed","Account")
+        account1.transfer(account2,60)
+        self.assertEqual(account2.balance,20)
+        
+    def test_transfer_closed_account_both_ends(self):
+        account1 = Account(None,None,100,"Closed","Account")
+        account2 = Account(None,None,20,"Closed","Account")
+        account1.transfer(account2,60)
+        account2.transfer(account1,10)
+        self.assertTrue(account1.balance == 100 and account2.balance == 20)
+    
+    def test_transfer_negative_amount(self):
+        account1 = Account(None,None,100,"Active","Account")
+        account2 = Account(None,None,20,"Active","Account")
+        account1.transfer(account2,-60)
+        self.assertEqual(account2.balance,80)
+    
     def test_checkbalance(self):
-        account = Account(None,None,0,"Active","Account")
-        account.deposit(159.9)
+        account = Account(None,None,159.9,"Active","Account")
         self.assertEqual(account.balance,159.9)
     
     def test_history(self):
@@ -219,7 +279,7 @@ class TestExample(TestCase):
         self.assertTrue(len(result) == 1 and type(result) == list)
     
     #class SavingsAccount(Account)
-    def test_withrawal_limit_3(self):
+    def test_withrawal_limit_three_per_session(self):
         account = SavingsAccount(None,None,0,"Active","SavingsAccount")
         account.deposit(100)
         account.withdraw(20)
@@ -241,7 +301,7 @@ class TestExample(TestCase):
         elig = account.eligible_for_overdraft(500)
         self.assertTrue(elig)
     
-    def test_noteligiblefor_overdraft(self):
+    def test_not_eligiblefor_overdraft(self):
         account = CurrentAccount(None,None,0,"Active","SavingsAccount")
         elig = account.eligible_for_overdraft(501)
         self.assertFalse(elig)
@@ -251,21 +311,17 @@ class TestExample(TestCase):
         account.overdraft(300)
         self.assertEqual(account.balance,-300)
     
-    def test_withrawal_overdraftlimitincrement(self):
+    def test_withrawal_overdraftlimit_increment(self):
         account = CurrentAccount(None,None,0,"Active","SavingsAccount")
-        account.withdraw(400)
-        account.withdraw(110)
-        self.assertEqual(account.balance,-400)
+        account.withdraw(400) #yes
+        account.withdraw(110) #yes
+        self.assertEqual(account.balance,-400) #yes
     
     def test_withrawal_overdraftlimit(self):
         account = CurrentAccount(None,None,0,"Active","SavingsAccount")
         account.withdraw(600)
         self.assertEqual(account.balance,0)
-    
-    # class Bank
-    
-    
-        
+       
 def run_unittest():
     unittest.main(argv=[' '],verbosity=0,exit=False)
 
