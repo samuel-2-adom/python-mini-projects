@@ -15,20 +15,23 @@ A collection of Python CLI tools and small projects built while learning program
 - Working with external files and data
 - Error handling and validation
 - Terminal UI design with Rich library
+- **Object-oriented programming (OOP)** ⭐
 - Task management and data persistence
 - File hashing and duplicate detection
 - Text analysis and n-gram generation
-- Object-oriented programming (OOP)
 - Banking systems and financial simulations
+- **Unit testing with unittest framework** ⭐
 
 ---
 
 ## 🧰 Projects Included
 
-### 📓 Note Manager
-A command-line tool for managing notes and files with a beautiful terminal interface.
+### 📓 Note Manager (OOP + JSON)
+A command-line tool for managing notes with beautiful terminal interface and persistent JSON storage.
 
 **Features:**
+- ✅ **Refactored to OOP** - Clean object-oriented design
+- ✅ **JSON Persistence** - Notes stored in JSON format
 - ✅ Create new notes/files
 - ✅ Read file contents with formatting
 - ✅ Append notes to existing files
@@ -47,7 +50,7 @@ cd notemanager
 python notemanager.py
 ```
 
-**Learning:** File I/O, regex patterns, CLI design
+**Learning:** OOP design, JSON persistence, file I/O, regex patterns, CLI design
 
 ---
 
@@ -73,10 +76,12 @@ python calculator.py
 
 ---
 
-### ⚡ Task Manager
+### ⚡ Task Manager (OOP + JSON)
 A powerful task management CLI tool with priority levels, due dates, and action logging.
 
 **Features:**
+- ✅ **Full OOP Implementation** - Task and TaskManager classes
+- ✅ **JSON Data Persistence** - Tasks saved and loaded from JSON
 - ✅ Add tasks with title, priority, and due date
 - ✅ Delete, Load & Complete Tasks by using Assigned Task IDs
 - ✅ Mark tasks as complete
@@ -87,9 +92,8 @@ A powerful task management CLI tool with priority levels, due dates, and action 
 - ✅ Priority filtering (High/Low)
 - ✅ Due date validation (must be future date)
 - ✅ Beautiful Rich terminal UI with panels
-- ✅ Persistent storage: tasks are saved to and loaded from a JSON file (read/write) so your tasks survive across runs
 - ✅ Human-friendly Task IDs (5-digit random IDs) for easy reference
-- ✅ View mapping of Task Title -> Task ID for selection when deleting, loading, or marking complete
+- ✅ View mapping of Task Title -> Task ID for selection
 
 **Usage:**
 ```bash
@@ -238,20 +242,23 @@ python text_analysis_generation.py
 
 ---
 
-### 🏦 Banking Simulator
+### 🏦 Banking Simulator (OOP + JSON)
 A comprehensive banking system simulation with account management, transactions, and financial operations.
 
 **Features:**
+- ✅ **Full OOP Implementation** - Customer, Account, SavingsAccount, CurrentAccount classes
+- ✅ **JSON Data Persistence** - Account data saved and loaded from JSON
 - ✅ Create and manage bank accounts
+- ✅ Multiple account types (Savings, Checking/Current)
 - ✅ Deposit and withdraw funds
 - ✅ Transfer money between accounts
 - ✅ Check account balance
 - ✅ View transaction history
 - ✅ Interest calculations and updates
-- ✅ Account types (Savings, Checking)
 - ✅ Fee management
+- ✅ Withdrawal limits (SavingsAccount: 3 per session)
+- ✅ Overdraft facility (CurrentAccount: up to 500)
 - ✅ Beautiful Rich terminal UI with formatted tables
-- ✅ Persistent storage with JSON
 - ✅ User authentication and account security
 - ✅ Financial reports and summaries
 
@@ -265,6 +272,33 @@ python banking_simulator.py
 
 ---
 
+## 🧪 Testing
+
+This project includes **comprehensive unit tests** covering all major functionality.
+
+**Run all tests:**
+```bash
+python test.py
+```
+
+**Test Coverage:**
+- ✅ Text analysis functions (split_text, clean_text, etc.)
+- ✅ Anagram/palindrome detection
+- ✅ Caesar cipher encoding/decoding
+- ✅ Calculator operations
+- ✅ File duplicate detection
+- ✅ Pattern searching and regex matching
+- ✅ **Banking system** (Customer, Account, SavingsAccount, CurrentAccount)
+  - Account creation and management
+  - Deposit, withdrawal, and transfer operations
+  - Fee calculations
+  - Withdrawal limits
+  - Overdraft facility and eligibility
+
+**Testing Framework:** `unittest` (Python's built-in testing framework)
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -273,15 +307,16 @@ python-mini-projects/
 ├── LICENSE                                            # MIT License
 ├── requirements.txt                                   # Python dependencies
 ├── .gitignore                                         # Git ignore rules
+├── test.py                                            # Comprehensive unit tests ⭐
 │
 ├── calculator/
 │   └── calculator.py                                  # Calculator tool
 │
 ├── notemanager/
-│   └── notemanager.py                                 # Note management tool
+│   └── notemanager.py                                 # Note management tool (OOP + JSON)
 │
 ├── taskmanager/
-│   └── taskmanager.py                                 # Task manager tool
+│   └── taskmanager.py                                 # Task manager tool (OOP + JSON)
 │
 ├── caesar_cipher/
 │   └── caesar_cipher.py                               # Caesar cipher tool
@@ -303,7 +338,7 @@ python-mini-projects/
 │   └── words.txt                                      # (auto-downloaded on first run)
 │
 └── banking_simulator/
-    └── banking_simulator.py                           # Banking system simulator
+    └── banking_simulator.py                           # Banking system simulator (OOP + JSON)
 ```
 
 ---
@@ -320,8 +355,9 @@ python-mini-projects/
 | **`hashlib`** | MD5 hashing for duplicate detection |
 | **`shelve`** | Data persistence and database |
 | **`datetime`** | Date and time handling |
+| **`json`** | Read/write JSON for data persistence |
+| **`unittest`** | Unit testing framework |
 | **`rich`>=13.0.0** | Beautiful terminal UI and formatting |
-| **`json`** | Read/write JSON for persistence |
 
 ---
 
@@ -359,7 +395,13 @@ python -m pip install -r requirements.txt
 py -m pip install -r requirements.txt
 ```
 
-### 3. Run Your First Project
+### 3. Run Tests (Optional)
+
+```bash
+python test.py
+```
+
+### 4. Run Your First Project
 
 **Note Manager:**
 ```bash
@@ -451,10 +493,12 @@ For detailed functionality, check the inline comments in each `.py` file.
 ✅ **Auto-Downloads** - Projects automatically fetch required data files from the internet  
 ✅ **CLI Design** - Professional command-line interface design patterns  
 ✅ **User Experience** - Loading animations, colored output, and clear prompts  
-✅ **Object-Oriented Programming** - Task, TaskManager, and Account classes demonstrating OOP principles  
-✅ **Data Persistence** - Using shelve for storing file hashes, JSON for managing state across runs  
+✅ **Object-Oriented Programming** - Task, TaskManager, Customer, Account classes demonstrating OOP principles  
+✅ **Data Persistence** - Using JSON for task/note/account management, shelve for file hashes  
 ✅ **N-gram Generation** - Language model implementation for text generation  
-✅ **Banking Systems** - Financial simulations with account management and transaction processing
+✅ **Banking Systems** - Financial simulations with account management and transaction processing  
+✅ **Unit Testing** - Comprehensive test coverage with unittest framework  
+✅ **Multiple Account Types** - Savings and Current accounts with different features and limits  
 
 ---
 
@@ -490,20 +534,22 @@ Contributions are welcome! Feel free to:
 - 🚀 Learning Python and building cool projects
 - 📚 Passionate about algorithms and problem-solving
 - 💻 Building practical CLI tools
+- 🧪 Committed to writing quality code with tests
 
 ---
 
 ## 🎨 Future Plans
 
-This is a learning project with exciting plans ahead:
+This is an active learning project with exciting plans ahead:
 
+- ✅ ~~Unit Tests~~ **DONE!** - Comprehensive test coverage with 60+ tests
 - **GUI Version using Tkinter** - A graphical interface for all these tools with buttons and windows! 🎨
 - **Web Interface** - Potentially a web-based version using Flask/Django 🌐
 - **Additional Projects** - More CLI tools and utilities 🛠️
 - **Performance Optimization** - Improve algorithm efficiency for large datasets ⚡
-- **Unit Tests** - Comprehensive test coverage 🧪
-- **Documentation** - Detailed docs for each project 📖
-- **Database Integration** - Replace shelve with SQLite for better data management 💾
+- **Extended Documentation** - Detailed docs for each project with examples 📖
+- **Database Integration** - Replace shelve/JSON with SQLite for better data management 💾
+- **GitHub Actions CI/CD** - Automated testing on push and pull requests 🔄
 
 ---
 
@@ -513,9 +559,11 @@ If you have questions or run into issues:
 1. Check the inline comments in the code
 2. Review the usage examples above
 3. Look at the project-specific documentation
-4. Feel free to open an issue on GitHub
+4. Run the test suite to verify functionality: `python test.py`
+5. Feel free to open an issue on GitHub
 
 ---
 
-**Last Updated:** August 15, 2026  
-**Status:** Active Learning Project ✅
+**Last Updated:** August 24, 2026  
+**Status:** Active Learning Project ✅  
+**Test Coverage:** 60+ unit tests passing ✅
