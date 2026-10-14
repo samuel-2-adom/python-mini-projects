@@ -9,3 +9,5 @@ task.json
 note.json
 bank.json
 customer_info.json
+duplicate.db
+duplicates.log
