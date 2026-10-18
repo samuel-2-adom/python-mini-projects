@@ -161,7 +161,7 @@ def add_to_duplicates(digest,path):
             row = conn.execute(sql,params)
             logger.info(f"ADDED ROW #{row.lastrowid}")
     except sqlite3.Error as e:
-        print(f"An excetion occured : [{e}]")
+        logger.error(f"An exception occurred : [{e}]")
 
 
 # Remove Stale Duplicates
@@ -199,8 +199,10 @@ HAVING COUNT(*) >= 2;"""
                     if row.rowcount > 0:
                         logger.info(f"UPDATED ROWS : {row.rowcount}")
                         print()
+                        logger.info("Stale Data Cleaned...")
+                        print()
             except sqlite3.Error as e:
-                console.print(f"An excetion occured : [underline bold blue][{e}][underline bold blue]")
+                logger.error(f"An exception occurred : [{e}]")
             
 
 # Get data and remove stale state
