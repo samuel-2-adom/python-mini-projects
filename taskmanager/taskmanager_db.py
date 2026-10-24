@@ -5,7 +5,7 @@ from logging.handlers import RotatingFileHandler
 import os
 import platform
 from datetime import datetime,timedelta
-from time import sleep, strftime
+from time import sleep
 from rich.console import Console,Group
 from rich.panel import Panel
 from rich.align import Align
@@ -13,7 +13,6 @@ from rich.text import Text
 from rich.rule import Rule
 from rich.padding import Padding
 from rich.progress import Progress, SpinnerColumn, TextColumn
-from rich.columns import Columns
 from rich.prompt import Prompt
 console = Console()
 
